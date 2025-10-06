@@ -25,10 +25,11 @@ const Projects = () => {
   const projects = [
     {
       title: "Application CRUD pour la Marine Nationale (CEPPOL)",
-      description: "Conception et développement d'une application web complète permettant de centraliser les informations de suivi d'incidents de pollution en mer sur smartphone et PC, dans un contexte de gestion de crise.",
-      details: "Au niveau technique, j'ai conçu le front-end en React et le back-end en Node.js, en suivant une architecture RESTful. J'ai mis en place la conteneurisation via Docker pour simplifier le déploiement et l'intégration continue.",
+      description: "Développement d'une application web pour le CEPPOL (Centre d’Expertise Pratique de Lutte contre la POLlution) de la Marine Nationale, destinée à centraliser et suivre les incidents de pollution en mer sur smartphone et PC, dans un contexte de gestion de crise.",
+      details: "Lorsqu’une pollution est détectée, l’astreinte opérationnelle du CEPPOL renseigne une fiche d’incident détaillant la nature de la pollution, sa localisation, et les actions entreprises. L’application développée permet de créer, consulter et mettre à jour ces fiches en temps réel, de les enrichir collaborativement et d’assurer une diffusion rapide de l’information en situation de crise. Elle intègre la cartographie des pollutions, la consultation des moyens de lutte disponibles, l’ajout de photos et l’accès à une base documentaire de référence. Un soin particulier a été apporté à l’ergonomie et à la simplicité d’utilisation pour garantir une réactivité optimale. Techniquement, le front-end a été réalisé en React et le back-end en Node.js avec une architecture RESTful. La conteneurisation via Docker facilite le déploiement et l’intégration continue.",
       techs: ["React", "Node.js", "REST API", "Docker"],
-      image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80"
+      image: "[https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80](https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80)",
+      video: "/DisplayCeppol.mp4"
     },
     {
       title: "Application de gestion d'étudiants en Java",
@@ -69,11 +70,43 @@ const Projects = () => {
             >
               <div className={`grid md:grid-cols-2 gap-8 ${index % 2 === 1 ? 'md:grid-flow-dense' : ''}`}>
                 <div className={`${index % 2 === 1 ? 'md:col-start-2' : ''}`}>
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-full object-cover min-h-[400px]"
-                  />
+                  {project.video ? (
+                    <video
+                      src={project.video}
+                      className="w-full h-full object-cover min-h-[400px]"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      poster={project.image}
+                      tabIndex={-1}
+                      aria-hidden={true}
+                      disablePictureInPicture
+                      controlsList="nodownload noremoteplayback noplaybackrate"
+                      onContextMenu={(e) => e.preventDefault()}
+                      onPause={(e) => {
+                        // If paused (by any means), immediately resume playback
+                        try {
+                          e.currentTarget.play().catch(() => {});
+                        } catch {}
+                      }}
+                      onSeeking={(e) => {
+                        // Prevent seeking by snapping back to start
+                        try {
+                          e.currentTarget.currentTime = 0;
+                        } catch {}
+                      }}
+                      onKeyDown={(e) => e.preventDefault()}
+                      style={{ pointerEvents: "none" }}
+                    />
+                  ) : (
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover min-h-[400px]"
+                    />
+                  )}
                 </div>
                 
                 <div className="p-8 md:p-12 flex flex-col justify-center">
